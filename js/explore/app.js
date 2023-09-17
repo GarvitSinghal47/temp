@@ -6,7 +6,7 @@ var $ = jQuery
 
 var accidentsData = null;
 
-$.getJSON('/data/accidents/accidents.json', function (data) {
+$.getJSON('temp/data/accidents/accidents.json', function (data) {
     accidentsData = object2array(data);
     for (var i = 0; i < accidentsData.length; i++) {
         accidentsData[i].id = accidentDatumId(accidentsData[i]);
@@ -35,7 +35,7 @@ $(window).resize(function () {
 
 var mapsIndex = null;
 
-$.getJSON('/data/maps-index.json', function (data) {
+$.getJSON('temp/data/maps-index.json', function (data) {
     mapsIndex = data;
 });
 
@@ -60,7 +60,7 @@ function downloadAllMaps(maps) {
         throw "You try to download more than 1000 JSON maps, that's too much man!"
     }
     var promises = _(maps).map(function (m) {
-        return $.getJSON('/data/json-maps/' + m);
+        return $.getJSON('temp/data/json-maps/' + m);
     });
     allPromise = Promise.all(promises);
     allPromiseWithNames = allPromise.then(function (arr) {
