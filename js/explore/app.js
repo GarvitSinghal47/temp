@@ -6,21 +6,21 @@ var $ = jQuery
 
 var accidentsData = null;
 
-$.getJSON('temp/data/accidents/accidents.json', function (data) {
-    accidentsData = object2array(data);
-    for (var i = 0; i < accidentsData.length; i++) {
-        accidentsData[i].id = accidentDatumId(accidentsData[i]);
-    }
+$.getJSON("../temp/data/accidents/accidents.json", function (data) {
+  accidentsData = object2array(data);
+  for (var i = 0; i < accidentsData.length; i++) {
+    accidentsData[i].id = accidentDatumId(accidentsData[i]);
+  }
 
-    d3.select('#filters').append("dl");
-    createComponents();
-    updateComponents();
-    updateFilterList();
-    updateSelectionCard();
+  d3.select("#filters").append("dl");
+  createComponents();
+  updateComponents();
+  updateFilterList();
+  updateSelectionCard();
 
-    if (! readCookie('introDone')) {
-        startTutorial();
-    }
+  if (!readCookie("introDone")) {
+    startTutorial();
+  }
 });
 
 $(window).resize(function () {
@@ -35,7 +35,7 @@ $(window).resize(function () {
 
 var mapsIndex = null;
 
-$.getJSON('temp/data/maps-index.json', function (data) {
+$.getJSON('../data/maps-index.json', function (data) {
     mapsIndex = data;
 });
 
