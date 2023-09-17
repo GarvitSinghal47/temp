@@ -6,22 +6,25 @@ var $ = jQuery
 
 var accidentsData = null;
 
-$.getJSON("../data/accidents/accidents.json", function (data) {
-  accidentsData = object2array(data);
-  for (var i = 0; i < accidentsData.length; i++) {
-    accidentsData[i].id = accidentDatumId(accidentsData[i]);
-  }
+$.getJSON(
+  "https://garvitsinghal47.github.io/temp/data/accidents/accidents.json",
+  function (data) {
+    accidentsData = object2array(data);
+    for (var i = 0; i < accidentsData.length; i++) {
+      accidentsData[i].id = accidentDatumId(accidentsData[i]);
+    }
 
-  d3.select("#filters").append("dl");
-  createComponents();
-  updateComponents();
-  updateFilterList();
-  updateSelectionCard();
+    d3.select("#filters").append("dl");
+    createComponents();
+    updateComponents();
+    updateFilterList();
+    updateSelectionCard();
 
-  if (!readCookie("introDone")) {
-    startTutorial();
+    if (!readCookie("introDone")) {
+      startTutorial();
+    }
   }
-});
+);
 
 $(window).resize(function () {
     d3.selectAll('.dashboard-container svg').remove();
