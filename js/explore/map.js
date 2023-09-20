@@ -168,55 +168,34 @@ function updateMap(data, addFilter, removeFilter, selectPoint) {
 function updateTabMap(allMaps) {
   d3.select("#tabs").selectAll("li").remove();
 
-  if (! allMaps) {
-    propertiesMap.tabSelected = 'accidents';
-  } else {
-    var mapsByType = _(allMaps).groupBy(function (d) { return d[0].split("_")[1]; }).value();
-    propertiesMap.mapsByType = mapsByType;
-    var tabsValue = _(mapsByType).keys().sortBy(prettyMapType).filter(function (d) {return d != 'hsrel'; }).value();
+  propertiesMap.tabSelected = "accidents"; 
 
-    if (!tabsValue.includes(propertiesMap.tabSelected)) {
-      propertiesMap.tabSelected = 'accidents';
-    }
-  }
-
-  if (propertiesMap.tabSelected != 'accidents') {
+  if (propertiesMap.tabSelected != "accidents") {
     var maps = propertiesMap.mapsByType[propertiesMap.tabSelected];
-    $('#dateRange').attr('max', maps.length - 1);
+    $("#dateRange").attr("max", maps.length - 1);
   }
 
-  d3.select("#tabs").insert("li")
-      .classed("active", propertiesMap.tabSelected == 'accidents')
-      .on('click', function (d) {
-        if (propertiesMap.tabSelected != 'accidents') {
-          propertiesMap.tabSelected = 'accidents';
-          updateTabMap(allMaps);
-        }
-      })
-    .insert('a')
-      .attr('data-toggle', "tab")
-      .text("Accidents");
+  d3.select("#tabs")
+    .insert("li")
+    .classed("active", propertiesMap.tabSelected == "accidents")
+    .on("click", function (d) {
+      if (propertiesMap.tabSelected != "accidents") {
+        propertiesMap.tabSelected = "accidents";
+        updateTabMap(allMaps);
+      }
+    })
+    .insert("a")
+    .attr("data-toggle", "tab")
+    .text("Accidents");
 
-  if (allMaps) {
-    var tabs = d3.select("#tabs").selectAll(".custom-tab").data(tabsValue, function(d) {return d;});
-  
-    tabs.enter().insert('li')
-        .classed('custom-tab', true)
-        .classed("active", function (d) { return propertiesMap.tabSelected == d; })
-        .on('click', function (d) {
-          if (propertiesMap.tabSelected != d) {
-            propertiesMap.tabSelected = d;
-            updateTabMap(allMaps);  // TODO maybe problem old data
-            // TODO update map
-          }
-        })
-      .insert('a')
-        .attr('data-toggle', "tab")
-        .text(function (d,i) { return prettyMapType(d); });
-  }
-
-  d3.select('#slider-and-info').classed("hidden-stuff", propertiesMap.tabSelected  == 'accidents');
-  d3.select('#original-url').classed("hidden-stuff", propertiesMap.tabSelected  == 'accidents');
+  d3.select("#slider-and-info").classed(
+    "hidden-stuff",
+    propertiesMap.tabSelected == "accidents"
+  );
+  d3.select("#original-url").classed(
+    "hidden-stuff",
+    propertiesMap.tabSelected == "accidents"
+  );
 
   if ($(".leaflet-overlay-pane svg").length >= 2) {
     $(".leaflet-overlay-pane svg:last").remove();
